@@ -1,5 +1,6 @@
 import { CommandsRegistry, registerCommand, runCommand } from "./commands/commands.js";
 import { handlerLogin, handlerRegister, handlerReset, handlerUsers } from "./commands/users.js";
+import { handlerAgg, handlerAddFeed, handlerFeeds } from "./commands/feed.js";
 
 async function main() {
   const commandRegistry: CommandsRegistry = {};
@@ -7,6 +8,9 @@ async function main() {
   registerCommand(commandRegistry, 'register', handlerRegister);
   registerCommand(commandRegistry, 'reset', handlerReset);
   registerCommand(commandRegistry, 'users', handlerUsers);
+  registerCommand(commandRegistry, 'agg', handlerAgg);
+  registerCommand(commandRegistry, 'addfeed', handlerAddFeed);
+  registerCommand(commandRegistry, 'feeds', handlerFeeds);
   const argv = process.argv;
   const args = argv.slice(2);
   if (args.length === 0) {
@@ -21,6 +25,7 @@ async function main() {
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
+      console.error((err as any).cause);
     } else {
       console.error(err);
     }

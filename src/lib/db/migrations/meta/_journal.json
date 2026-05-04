@@ -8,6 +8,13 @@
       "when": 1777702241749,
       "tag": "0000_vengeful_mephisto",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1777877649999,
+      "tag": "0001_brave_madame_masque",
+      "breakpoints": true
     }
   ]
 }
