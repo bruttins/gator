@@ -15,6 +15,13 @@
       "when": 1777877649999,
       "tag": "0001_brave_madame_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777963057642,
+      "tag": "0002_wide_proudstar",
+      "breakpoints": true
     }
   ]
 }

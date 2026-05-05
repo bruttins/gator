@@ -4,6 +4,7 @@ import { readConfig } from '../config';
 import { getUser } from '../lib/db/queries/users';
 import { createFeed, getFeeds } from '../lib/db/queries/feeds';
 import { Feed, User } from '../lib/db/schema';
+import { createFeedFollow } from '../lib/db/queries/feed-follows';
 
 
 export async function handlerAgg(cmdName: string, ...args: string[]) {
@@ -29,10 +30,12 @@ export async function handlerAddFeed(cmdName: string, ...args: string[]) {
     }
     const currentUser = await getUser(currentUserName);
     if (!currentUser) {
-        throw new Error(`No user logged in. Please login first.`);
+        throw new Error(`User ${currentUserName} not found. Please login first.`);
     }
     const feed = await createFeed(name, url, currentUser.id);
+    const follow = await createFeedFollow(feed.id, currentUser.id);
     await printFeed(feed, currentUser);
+    console.log(`User ${currentUser.name} is now following feed: ${feed.name}`);
 }
 
 function printFeed(feed: Feed, user: User) {
