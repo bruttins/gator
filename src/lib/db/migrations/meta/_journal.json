@@ -29,6 +29,13 @@
       "when": 1778245336655,
       "tag": "0003_minor_vision",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778262882490,
+      "tag": "0004_dry_red_hulk",
+      "breakpoints": true
     }
   ]
 }
