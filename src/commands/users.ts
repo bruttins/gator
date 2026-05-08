@@ -2,7 +2,6 @@
 import { createUser, getUser, resetUsers, getAllUsers } from '../lib/db/queries/users.js';
 import { setUser, readConfig } from '../config';
 
-export type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
     if (args.length < 1) {

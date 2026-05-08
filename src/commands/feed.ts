@@ -1,7 +1,4 @@
-import { CommandHandler } from './commands';
 import { fetchFeed } from '../lib/rss';
-import { readConfig } from '../config';
-import { getUser } from '../lib/db/queries/users';
 import { createFeed, getFeeds } from '../lib/db/queries/feeds';
 import { Feed, User } from '../lib/db/schema';
 import { createFeedFollow } from '../lib/db/queries/feed-follows';
@@ -17,25 +14,16 @@ export async function handlerAgg(cmdName: string, ...args: string[]) {
     }
 }
 
-export async function handlerAddFeed(cmdName: string, ...args: string[]) {
+export async function handlerAddFeed(cmdName: string, user: User, ...args: string[]) {
     if (args.length < 2) {
         throw new Error(`Usage: addfeed <name> <url>`);
     }
     const name = args[0];
     const url = args[1];
-    const cfg = readConfig();
-    const currentUserName = cfg.currentUserName;
-    if (!currentUserName) {
-        throw new Error(`No user logged in. Please login first.`);
-    }
-    const currentUser = await getUser(currentUserName);
-    if (!currentUser) {
-        throw new Error(`User ${currentUserName} not found. Please login first.`);
-    }
-    const feed = await createFeed(name, url, currentUser.id);
-    const follow = await createFeedFollow(feed.id, currentUser.id);
-    await printFeed(feed, currentUser);
-    console.log(`User ${currentUser.name} is now following feed: ${feed.name}`);
+    const feed = await createFeed(name, url, user.id);
+    await createFeedFollow(feed.id, user.id);
+    printFeed(feed, user);
+    console.log(`User ${user.name} is now following feed: ${feed.name}`);
 }
 
 function printFeed(feed: Feed, user: User) {
